@@ -6,22 +6,22 @@ var connect = require('gulp-connect');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
-var clean = require('gulp-clean');
+var rimraf = require('gulp-rimraf');
 var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
 
 // tasks
 gulp.task('lint', function() {
-  gulp.src(['./app/**/*.js', '!./app/bower_components/**'])
+  gulp.src(['./app/**/*.js', '!./app/bower_components/**', '!./app/js/bundled.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
 });
 gulp.task('clean', function() {
     gulp.src('./dist/*')
-      .pipe(clean({force: true}));
+      .pipe(rimraf({force: true}));
     gulp.src('./app/js/bundled.js')
-      .pipe(clean({force: true}));
+      .pipe(rimraf({force: true}));
 });
 gulp.task('minify-css', function() {
   var opts = {comments:true,spare:true};
